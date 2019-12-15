@@ -20,7 +20,7 @@ def main(argv):
 
         # send to topic on broker
         producer.send(
-            topic='es-test',
+            topic='event-source-test',
             key=num_bytes,
             value=num_bytes)
 

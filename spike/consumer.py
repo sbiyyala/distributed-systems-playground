@@ -8,14 +8,14 @@ from kafka import KafkaConsumer
 def consumer_ready(consumer):
     partitions = None
     while partitions is None or len(partitions) == 0:
-        partitions = consumer.partitions_for_topic('es-test')
+        partitions = consumer.partitions_for_topic('event-source-test')
         consumer.poll(20)
 
 
 def main(argv):
     while True:
         # initialize consumer to given topic and broker
-        consumer = KafkaConsumer('es-test',
+        consumer = KafkaConsumer('event-source-test',
                                  group_id=None,
                                  auto_offset_reset='earliest',
                                  bootstrap_servers=['localhost:9092'])
