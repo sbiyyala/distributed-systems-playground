@@ -35,6 +35,3 @@ $ ./producer.py
 # Consumer terminal
 $ ./consumer.py
 ```  
-
-### TODO:
-Dockerize the entire setup
