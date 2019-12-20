@@ -14,19 +14,4 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  db:
-    image: postgres:10.1-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-  web:
-    build: .
-    command: python /code/manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
-    ports:
-      - 8000:8000
-    depends_on:
-      - db
-volumes:
-  postgres_data:
 
