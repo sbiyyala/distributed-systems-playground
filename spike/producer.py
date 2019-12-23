@@ -8,6 +8,7 @@ from kafka import KafkaProducer
 import datetime
 import json
 
+ALL_EVENT_STATUS = {'Created', 'Payment Succeeded', 'Payment Rejected', 'Canceled', 'Shipped'}
 
 def on_success(record):
     print('success-dance.gif')
@@ -19,16 +20,18 @@ def main(argv):
         bootstrap_servers='localhost:9092',
         value_serializer=lambda x: json.dumps(x).encode('utf-8')
     )
-
+    order_id = 0
     while True:
-        # generate a random integer
-        num = random.randint(10, 100)
         producer.send(
             topic='order.created',
             key=bytes('dummy key', encoding='utf-8'),
-            value={'date_created': datetime.datetime.today().date().isoformat(), 'order_value': num}
+            value={
+                'event_date': datetime.datetime.today().date().isoformat(),
+                'order_id': order_id,
+
+            }
         ).add_callback(on_success)
-        # wait 1 second
+        order_id += 1
         time.sleep(5)
 
 

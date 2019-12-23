@@ -3,7 +3,8 @@ from kafka import KafkaConsumer
 import django
 
 django.setup()
-from reporting_service.models.order import Order
+from reporting_service.models.order import Order, OrderEvent
+from reporting_service.event_store import EventStore
 
 
 def main():
@@ -14,11 +15,12 @@ def main():
         bootstrap_servers=['localhost:9092'],
         value_deserializer=lambda x: json.loads(x.decode('utf-8'))
     )
+    event_store = EventStore(aggregate_model=Order, event_model=OrderEvent)
     for msg in consumer:
         print(msg)
-        order = Order(order_value=msg.value['order_value'], order_date=msg.value['date_created'])
-        order.save()
-        print('New order {} successfully saved'.format(order.id))
+        order_id = msg.value.pop('order_id')
+        event_store.append_to_stream(order_id, [msg.value])
+        print('Successfully appended to stream')
 
 
 if __name__ == '__main__':
