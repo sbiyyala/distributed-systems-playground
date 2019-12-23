@@ -13,17 +13,15 @@ def consumer_ready(consumer):
 
 
 def main(argv):
-    while True:
-        # initialize consumer to given topic and broker
-        consumer = KafkaConsumer('event-source-test',
-                                 group_id=None,
-                                 auto_offset_reset='earliest',
-                                 bootstrap_servers=['localhost:9092'])
-        consumer_ready(consumer)
-        # loop and print messages
-        for msg in consumer:
-            print(msg)
+    consumer = KafkaConsumer('event-source-test',
+                             group_id=None,
+                             auto_offset_reset='earliest',
+                             bootstrap_servers=['localhost:9092'])
+    # consumer_ready(consumer)
+    # loop and print messages
+    for msg in consumer:
+        print(msg)
 
 
 if __name__ == '__main__':
-    exit(main(sys.argv))
+    sys.exit(main(sys.argv))
