@@ -9,7 +9,7 @@ from reporting_service.event_store import EventStore
 
 def main():
     consumer = KafkaConsumer(
-        'order.created',
+        'order.status.changed',
         group_id=None,
         auto_offset_reset='latest',
         bootstrap_servers=['localhost:9092'],

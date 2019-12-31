@@ -8,7 +8,7 @@ from kafka import KafkaProducer
 import datetime
 import json
 
-ALL_EVENT_STATUS = {'Created', 'Payment Succeeded', 'Payment Rejected', 'Canceled', 'Shipped'}
+EVENT_STATUS = {'Created', 'Payment Succeeded', 'Payment Rejected', 'Canceled', 'Shipped'}
 
 def on_success(record):
     print('success-dance.gif')

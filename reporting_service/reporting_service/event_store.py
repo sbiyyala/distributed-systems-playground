@@ -5,12 +5,14 @@ PK = 'pk'
 ID = 'id'
 
 
-class EventStore(object):
+class DjangoEventStore(object):
+    """A simple event store implemented for django models"""
     def __init__(self, aggregate_model, event_model):
         self.aggregate_model = aggregate_model
         self.event_model = event_model
 
     def load_stream(self, aggregate_id) -> List:
+        """Given an aggregate id, fetch all events that roll up to the aggregate instance"""
         return self.event_model.objects.filter(**{'aggregate__pk': aggregate_id})
 
     def append_to_stream(self, aggregate_id,

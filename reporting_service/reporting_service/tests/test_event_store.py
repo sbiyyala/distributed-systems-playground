@@ -1,5 +1,5 @@
 import unittest
-from ..event_store import EventStore
+from ..event_store import DjangoEventStore
 import django
 
 django.setup()
@@ -9,7 +9,7 @@ from django.test import TestCase
 
 class TestEventStore(TestCase):
     def setUp(self) -> None:
-        self.store = EventStore(aggregate_model=Order, event_model=OrderEvent)
+        self.store = DjangoEventStore(aggregate_model=Order, event_model=OrderEvent)
         self.order_id = 200
         self.store.append_to_stream(
             self.order_id,
