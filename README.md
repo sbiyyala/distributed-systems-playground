@@ -1,4 +1,4 @@
-# event-sourcing-playground
+# distributed-systems-playground
 ## Overview
 This creates a "hello world" microservices architecture on a simple scale using event sourcing
 
