@@ -60,4 +60,4 @@ def produce(order_start_idx, number_of_orders, create=True):
 
 
 if __name__ == '__main__':
-    produce(order_start_idx=1, number_of_orders=10, create=False)
+    produce(order_start_idx=11, number_of_orders=20, create=False)

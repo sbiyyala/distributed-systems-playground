@@ -1,4 +1,4 @@
-# event-sourcing-playground
+# distributed-systems-playground
 ## Overview
 This creates a "hello world" microservices architecture on a simple scale using event sourcing
 
@@ -18,17 +18,17 @@ $ ./consumer.py
 ```  
 
 ### Reporting Service
-This service has 2 "entry points":
-* A consumer that listenens on `orders.status.changed` kafka topic and writes data into 
-django models `Order` and `OrderEvent`
-* A RESTful interface exposing:
-    * /orders/<id>
-    * /orders/<id>/history
+This service has 2 interfaces - one for **C**ommand and one for **Q**urery:
+* A consumer that listenens on `orders.status.changed` kafka topic and writes data into a stream
+of events, backed by django models `Order` and `OrderEvent` 
+* A RESTful interface loading stream events and exposing `GET` on:
+    * /orders/{id}
+    * /orders/{id}/history
 
 #### Event Store
 Reporting Service uses an event store class called `DjangoEventStore`. The idea is to expose
 2 methods useful in event sourcing paradigm:
-* `load_stream(aggreagate_id: Union[int, UUID)]) -> List[EventModle]`: Given an id of the
+* `load_stream(aggregate: Union[int, UUID)]) -> List[EventModel]`: Given an id of the
 aggregate model, this will return a stream(a list for simplicity) of EventModel
 * `append_to_stream(aggregate_id: Union[int, UUID], stream: List[Any])`: Appends a stream of 
 events, rolled up under an aggregate model's instance 
